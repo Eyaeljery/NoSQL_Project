@@ -1,0 +1,19 @@
+# === Données lourdes (ne pas push sur GitHub) ===
+data/raw/
+data/processed/
+
+# === Environnement virtuel ===
+.venv/
+
+# === Caches Python ===
+__pycache__/
+*.pyc
+
+# === Checkpoints Jupyter ===
+.ipynb_checkpoints/
+
+# === Fichiers d'environnement ===
+.env
+
+# (Optionnel) si tu ne veux pas versionner les notebooks :
+# *.ipynb

@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+    ports:
+      - "8081:8081"
+
+  migration:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile     # <-- nom corrigé
+    container_name: migration
+    depends_on:
+      - mongo
+    command: >
+      sh -c "python scripts/clean_data.py &&
+             python scripts/migrate_to_mongo.py"
+    volumes:
+      - ./data:/app/data
+
+volumes:
+  mongo_data:
